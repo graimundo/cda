@@ -13,6 +13,7 @@
 
   <modules>
     <module>platform</module>
+    <module>feature</module>
   </modules>
 
 </project>
