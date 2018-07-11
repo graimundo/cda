@@ -13,6 +13,10 @@
     <artifactId>pentaho-cda</artifactId>
     <packaging>feature</packaging>
 
+    <properties>
+        <pdi-dataservice-client-plugin.version>${project.version}</pdi-dataservice-client-plugin.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <!--    REPORTING    -->
@@ -112,12 +116,6 @@
                 <scope>provided</scope>
             </dependency>
 
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons-codec.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -135,7 +133,7 @@
         <dependency>
             <groupId>pentaho</groupId>
             <artifactId>pentaho-dataservice-client</artifactId>
-            <version>${pentaho-dataservice-client.version}</version>
+            <version>${pdi-dataservice-client-plugin.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
@@ -145,12 +143,6 @@
             <groupId>pentaho</groupId>
             <artifactId>cda-core</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>${commons-codec.version}</version>
         </dependency>
 
         <!-- Dependencies Bundles-->

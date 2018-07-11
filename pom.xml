@@ -60,6 +60,7 @@
     <karaf-maven-plugin.version>3.0.8</karaf-maven-plugin.version>
     <cxf.karaf.version>3.0.13</cxf.karaf.version>
     <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
+    <commons-codec.version>1.9</commons-codec.version>
   </properties>
 
   <dependencyManagement>
@@ -219,6 +220,11 @@
         <groupId>javax.ws.rs</groupId>
         <artifactId>javax.ws.rs-api</artifactId>
         <version>${javax.ws.rs-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>${commons-codec.version}</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
