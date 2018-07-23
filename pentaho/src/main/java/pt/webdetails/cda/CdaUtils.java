@@ -79,13 +79,16 @@ import org.pentaho.platform.engine.core.system.PentahoSessionHolder;
 import org.pentaho.platform.engine.security.SecurityHelper;
 
 import pt.webdetails.cda.settings.CdaSettingsReadException;
+import pt.webdetails.cda.settings.SettingsManager;
 import pt.webdetails.cda.utils.CorsUtil;
 import pt.webdetails.cda.utils.DoQueryParameters;
 import pt.webdetails.cda.utils.Messages;
 import pt.webdetails.cpf.PluginEnvironment;
 import pt.webdetails.cpf.audit.CpfAuditHelper;
+import pt.webdetails.cpf.context.api.IUrlProvider;
 import pt.webdetails.cpf.messaging.JsonGeneratorSerializable;
 import pt.webdetails.cpf.messaging.JsonResult;
+import pt.webdetails.cpf.repository.api.IContentAccessFactory;
 import pt.webdetails.cpf.utils.CharsetHelper;
 import pt.webdetails.cpf.utils.JsonHelper;
 import pt.webdetails.cpf.utils.MimeTypes;
@@ -100,6 +103,30 @@ public class CdaUtils {
   //  private static final String[] EXPORT_TYPES = {MimeTypes.JSON, MimeTypes.XML, MimeTypes.CSV};//TODO
 
   private static final Pattern CDA_PATH = Pattern.compile( "^[^:]*([^/]+)[^?]*" ); //TODO: safer to get trom repos?
+
+  private CdaEngine getCdaEngine() {
+    return CdaEngine.getInstance();
+  }
+
+  private SettingsManager getSettingsManager() {
+    return this.getCdaEngine().getSettingsManager();
+  }
+
+  private CdaCoreService getCdaCoreService() {
+    return new CdaCoreService( this.getCdaEngine() );
+  }
+  private ICdaEnvironment getEnvironment() {
+    return this.getCdaEngine().getEnvironment();
+  }
+
+  IContentAccessFactory getContentAccessFactory() {
+    return this.getEnvironment().getRepo();
+  }
+
+  private IUrlProvider getUrlProvider() {
+    return PluginEnvironment.env().getUrlProvider();
+  }
+
 
   public CdaUtils() {
   }
@@ -433,7 +460,7 @@ public class CdaUtils {
 
                           @Context HttpServletResponse servletResponse,
                           @Context HttpServletRequest servletRequest ) throws Exception {
-    final CdaEngine engine = CdaEngine.getInstance();
+    final CdaEngine engine = this.getCdaEngine();
     TableExporter exporter = useExporter( engine, outputType, servletResponse );
     exporter.export( servletResponse.getOutputStream(), engine.getCdaList() );
     servletResponse.getOutputStream().flush();
@@ -458,7 +485,7 @@ public class CdaUtils {
     }
 
     try {
-      CdaEngine.getInstance().getSettingsManager().clearCache();
+      this.getSettingsManager().clearCache();
       AbstractDataAccess.clearCache();
     } catch ( Exception cce ) {
       msg = "Method clearCache failed while trying to execute.";
@@ -477,7 +504,7 @@ public class CdaUtils {
     if ( StringUtils.isEmpty( path ) ) {
       throw new WebApplicationException( 400 );
     }
-    if ( !CdaEngine.getEnvironment().canCreateContent() ) {
+    if ( !this.getEnvironment().canCreateContent() ) {
       return Messages.getString( "CdaUtils.ERROR_ACCESS_DENIED" );
     }
     return getExtEditor().getMainEditor();
@@ -498,16 +525,16 @@ public class CdaUtils {
    */
   public void editFile( String path, @Context HttpServletResponse servletResponse ) throws IOException {
     servletResponse.sendRedirect(
-      PluginEnvironment.env().getUrlProvider().getPluginBaseUrl() + "editFile?path=" + path );
+      this.getUrlProvider().getPluginBaseUrl() + "editFile?path=" + path );
   }
 
   public void previewQuery( String path, @Context HttpServletResponse servletResponse ) throws IOException {
     servletResponse.sendRedirect(
-      PluginEnvironment.env().getUrlProvider().getPluginBaseUrl() + "previewQuery?path=" + path );
+      this.getUrlProvider().getPluginBaseUrl() + "previewQuery?path=" + path );
   }
 
   private CacheManager getCacheManager() {
-    return new CacheManager( PluginEnvironment.env().getUrlProvider(), CdaEngine.getEnvironment().getRepo() );
+    return new CacheManager( this.getUrlProvider(), this.getContentAccessFactory() );
   }
 
   @GET
@@ -526,7 +553,7 @@ public class CdaUtils {
 
   @VisibleForTesting
   void checkFileExists( String path ) throws CdaSettingsReadException, AccessDeniedException {
-    CdaEngine.getInstance().getSettingsManager().parseSettingsFile( path );
+    this.getSettingsManager().parseSettingsFile( path );
   }
 
   private String getPath( HttpServletRequest servletRequest ) throws Exception {
@@ -545,11 +572,11 @@ public class CdaUtils {
 
   @VisibleForTesting
   Previewer getPreviewer() {
-    return new Previewer( PluginEnvironment.env().getUrlProvider(), CdaEngine.getEnvironment().getRepo() );
+    return new Previewer( this.getUrlProvider(), this.getContentAccessFactory() );
   }
 
   private ExtEditor getExtEditor() {
-    return new ExtEditor( PluginEnvironment.env().getUrlProvider(), CdaEngine.getEnvironment().getRepo() );
+    return new ExtEditor( this.getUrlProvider(), this.getContentAccessFactory() );
   }
 
   /**
@@ -562,7 +589,7 @@ public class CdaUtils {
   public String listDataAccessTypes( @DefaultValue( "false" ) @QueryParam( "refreshCache" ) Boolean refreshCache )
     throws Exception {
     DataAccessConnectionDescriptor[] data =
-      CdaEngine.getInstance().getSettingsManager().getDataAccessDescriptors( refreshCache );
+      this.getSettingsManager().getDataAccessDescriptors( refreshCache );
 
     StringBuilder output = new StringBuilder( "" );
     if ( data != null ) {
@@ -591,11 +618,6 @@ public class CdaUtils {
     IOUtils.write( contents, out, getEncoding() );
     out.flush();
   }
-
-  private CdaCoreService getCdaCoreService() {
-    return new CdaCoreService( CdaEngine.getInstance() );
-  }
-
 
   //Interplugin calls  - Should be moved to a dedicated bean and method signature should be changed
   @Deprecated
