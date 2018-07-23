@@ -8,20 +8,20 @@
                            http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd">
 
   <context:annotation-config />
-    <bean id="cda" class="pt.webdetails.cda_pentaho.CdaContentGenerator" scope="prototype"/>
+    <bean id="cda" class="pt.webdetails.cda.pentaho.CdaContentGenerator" scope="prototype"/>
     
-    <bean id="CdaQueryComponent" class="pt.webdetails.cda_pentaho.CdaQueryComponent" />
+    <bean id="CdaQueryComponent" class="pt.webdetails.cda.pentaho.CdaQueryComponent" />
   
     <bean id="cda.IQueryCache" class="pt.webdetails.cda.cache.EHCacheQueryCache" scope="prototype"/>
     <!-- JAX-RS beans -->
     <bean id="api" class="pt.webdetails.cpf.JAXRSCLPluginServlet"/>
-    <bean id="cda.api" class="pt.webdetails.cda_pentaho.CdaUtils" />
+    <bean id="cda.api" class="pt.webdetails.cda.pentaho.CdaUtils" />
 
-    <bean id="cda.edit" class="pt.webdetails.cda_pentaho.CdaContentGenerator" scope="prototype">
+    <bean id="cda.edit" class="pt.webdetails.cda.pentaho.CdaContentGenerator" scope="prototype">
         <property name="edit" value="true" />
     </bean>
 
-    <bean id="CdaCacheWarmup" class="pt.webdetails.cda_pentaho.cache.scheduler.CdaCacheWarmer"/>
-    <bean id="CdaCacheMonitor" class="pt.webdetails.cda_pentaho.cache.endpoints.CacheMonitorEndpoint" />
-    <bean id="CdaCacheScheduler" class="pt.webdetails.cda_pentaho.cache.endpoints.CacheControllerEndpoint" />
+    <bean id="CdaCacheWarmup" class="pt.webdetails.cda.pentaho.cache.scheduler.CdaCacheWarmer"/>
+    <bean id="CdaCacheMonitor" class="pt.webdetails.cda.pentaho.cache.endpoints.CacheMonitorEndpoint" />
+    <bean id="CdaCacheScheduler" class="pt.webdetails.cda.pentaho.cache.endpoints.CacheControllerEndpoint" />
 </beans>
