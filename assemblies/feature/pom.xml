@@ -15,6 +15,7 @@
 
     <properties>
         <pdi-dataservice-client-plugin.version>${project.version}</pdi-dataservice-client-plugin.version>
+        <platform.version>${project.version}</platform.version>
     </properties>
 
     <dependencyManagement>
@@ -149,6 +150,20 @@
                 <scope>provided</scope>
             </dependency>
 
+
+            <!-- Platform -->
+            <dependency>
+                <groupId>pentaho</groupId>
+                <artifactId>pentaho-platform-api</artifactId>
+                <version>${platform.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>pentaho</groupId>
+                <artifactId>pentaho-platform-core</artifactId>
+                <version>${platform.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
             <!-- Kettle -->
             <dependency>
