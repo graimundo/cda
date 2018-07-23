@@ -24,6 +24,7 @@
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>cpf-core</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <!-- Used in Blueprint -->
@@ -37,6 +38,12 @@
       <groupId>pentaho</groupId>
       <artifactId>cda-pentaho</artifactId>
       <version>9.0.0.0-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
