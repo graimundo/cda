@@ -16,9 +16,9 @@
     <!--<bean id="cda.IQueryCache" class="pt.webdetails.cda.cache.EHCacheQueryCache" scope="prototype"/>-->
     <!-- JAX-RS beans -->
 
-    <jaxrs:server address="/cda-pentaho" id="cdaService">
+    <jaxrs:server address="/cda-pentaho" id="cdaPentahoService">
         <jaxrs:serviceBeans>
-            <bean id="cda.api" class="pt.webdetails.cda.CdaUtils" />
+            <bean id="cda.api" class="pt.webdetails.cda_pentaho.CdaUtils" />
         </jaxrs:serviceBeans>
     </jaxrs:server>
 

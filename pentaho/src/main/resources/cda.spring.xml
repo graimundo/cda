@@ -15,12 +15,12 @@ http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/serv
 
 
   <!--<bean id="IPluginCall" class="pt.webdetails.cpf.PentahoInterPluginCall" scope="prototype"/>-->
-  <bean id="IDataAccessUtils" class="pt.webdetails.cda.dataaccess.PentahoDataAccessUtils" scope="prototype"/>
-  <bean id="IMondrianRoleMapper" class="pt.webdetails.cda.connections.mondrian.MondrianRoleMapper" scope="prototype"/>
+  <bean id="IDataAccessUtils" class="pt.webdetails.cda_pentaho.dataaccess.PentahoDataAccessUtils" scope="prototype"/>
+  <bean id="IMondrianRoleMapper" class="pt.webdetails.cda_pentaho.connections.mondrian.MondrianRoleMapper" scope="prototype"/>
   <bean id="IQueryCache" class="pt.webdetails.cda.cache.EHCacheQueryCache" scope="prototype"/>
   <!--<bean id="ISessionUtils" class="pt.webdetails.cpf.session.PentahoSessionUtils" scope="prototype"/>-->
-  <bean id="ICubeFileProviderSetter" class="pt.webdetails.cda.dataaccess.PentahoCubeFileProviderSetter" scope="prototype"/>      
+  <bean id="ICubeFileProviderSetter" class="pt.webdetails.cda_pentaho.dataaccess.PentahoCubeFileProviderSetter" scope="prototype"/>
   <bean id="IEventPublisher" class="pt.webdetails.cpf.messaging.EventPublisher" scope="prototype"/>
   <bean id="IResourceLoader" class="pt.webdetails.cpf.resources.PentahoPluginResourceLoader" scope="prototype"/>
-  <bean id="IDataservicesLocalConnection" class="pt.webdetails.cda.connections.dataservices.DataservicesLocalConnection" scope="prototype"/>
+  <bean id="IDataservicesLocalConnection" class="pt.webdetails.cda_pentaho.connections.dataservices.DataservicesLocalConnection" scope="prototype"/>
 </beans>

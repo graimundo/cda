@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin title="Pentaho Community Data Access" name="cda"> <!--loader="OVERRIDING"-->
 
-	<lifecycle-listener class="pt.webdetails.cda.CdaLifecycleListener"/>
+	<lifecycle-listener class="pt.webdetails.cda_pentaho.CdaLifecycleListener"/>
 
 	<content-types>
 		<static-paths>
