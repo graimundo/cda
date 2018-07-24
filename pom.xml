@@ -62,6 +62,7 @@
     <cxf.karaf.version>3.0.13</cxf.karaf.version>
     <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
     <commons-codec.version>1.9</commons-codec.version>
+    <platform.version>${project.version}</platform.version>
   </properties>
 
   <dependencyManagement>
@@ -141,6 +142,17 @@
         <groupId>org.pentaho.reporting.engine</groupId>
         <artifactId>wizard-core</artifactId>
         <version>${pentaho-reporting.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>pentaho</groupId>
+        <artifactId>pentaho-platform-repository</artifactId>
+        <version>${platform.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>pentaho-kettle</groupId>
