@@ -41,6 +41,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
@@ -49,7 +50,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -649,7 +649,7 @@ public class CdaUtils {
   }
 
   private MultivaluedMap<String, String> getParameterMapFromRequest( HttpServletRequest servletRequest ) {
-    MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+    MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
     final Enumeration enumeration = servletRequest.getParameterNames();
     while ( enumeration.hasMoreElements() ) {
       final String param = (String) enumeration.nextElement();
