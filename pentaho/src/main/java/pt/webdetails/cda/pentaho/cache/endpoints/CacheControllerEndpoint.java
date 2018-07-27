@@ -25,7 +25,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.StreamingOutput;
 
-import pt.webdetails.cda.pentaho.cache.scheduler.CdaCacheScheduler;
+//import pt.webdetails.cda.pentaho.cache.scheduler.CdaCacheScheduler;
 import pt.webdetails.cpf.messaging.JsonGeneratorSerializable;
 import pt.webdetails.cpf.utils.JsonHelper;
 import pt.webdetails.cpf.utils.MimeTypes;
@@ -36,6 +36,7 @@ import pt.webdetails.cpf.utils.MimeTypes;
  */
 public class CacheControllerEndpoint {
 
+  /*
   @GET
   @Path( "/list" )
   @Produces( MimeTypes.JSON )
@@ -79,4 +80,5 @@ public class CacheControllerEndpoint {
   private CdaCacheScheduler getCacheScheduler() {
     return new CdaCacheScheduler();
   }
+  */
 }
