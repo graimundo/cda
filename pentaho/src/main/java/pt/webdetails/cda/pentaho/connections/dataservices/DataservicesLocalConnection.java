@@ -28,7 +28,7 @@ import java.util.Map;
 public class DataservicesLocalConnection implements IDataservicesLocalConnection {
 
   public DriverConnectionProvider getDriverConnectionProvider( Map<String, String> dataserviceParameters ) throws MalformedURLException {
-    final DataservicesDriverLocalConnectionProvider connectionProvider = new DataservicesDriverLocalConnectionProvider();
+    final DriverConnectionProvider connectionProvider = new DataservicesDriverLocalConnectionProvider();
 
     String driver = new DataServiceClientPlugin().getDriverClass();
     connectionProvider.setDriver( driver );
