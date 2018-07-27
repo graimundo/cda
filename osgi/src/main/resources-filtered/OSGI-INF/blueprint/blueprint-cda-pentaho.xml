@@ -10,20 +10,13 @@
                                http://cxf.apache.org/blueprint/jaxrs
                                http://cxf.apache.org/schemas/blueprint/jaxrs.xsd">
 
-
-    <!--<bean id="CdaQueryComponent" class="pt.webdetails.cda.CdaQueryComponent" />-->
-
-    <!--<bean id="cda.IQueryCache" class="pt.webdetails.cda.cache.EHCacheQueryCache" scope="prototype"/>-->
-    <!-- JAX-RS beans -->
-
+    <!-- Removing cda-pentaho as we are focusing on cda-core for now
     <jaxrs:server address="/cda-pentaho" id="cdaPentahoService">
         <jaxrs:serviceBeans>
             <bean id="cda.api" class="pt.webdetails.cda.pentaho.CdaUtils" />
         </jaxrs:serviceBeans>
     </jaxrs:server>
+    -->
 
-    <!--<bean id="CdaCacheWarmup" class="pt.webdetails.cda.cache.scheduler.CdaCacheWarmer"/>-->
-    <!--<bean id="CdaCacheMonitor" class="pt.webdetails.cda.cache.endpoints.CacheMonitorEndpoint" />-->
-    <!--<bean id="CdaCacheScheduler" class="pt.webdetails.cda.cache.endpoints.CacheControllerEndpoint" />-->
 
 </blueprint>

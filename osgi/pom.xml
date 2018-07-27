@@ -21,11 +21,14 @@
       <version>${project.version}</version>
     </dependency>
 
+    <!-- Removing cda-pentaho as we are focusing on cda-core for now
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>cda-pentaho</artifactId>
       <version>${project.version}</version>
     </dependency>
+    -->
+
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>pdi-dataservice-client-plugin</artifactId>
