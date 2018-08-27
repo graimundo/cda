@@ -14,34 +14,8 @@
 package pt.webdetails.cda.endpoints;
 
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
-
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-
 import pt.webdetails.cda.CdaCoreService;
 import pt.webdetails.cda.exporter.ExportOptions;
 import pt.webdetails.cda.exporter.ExportedQueryResult;
@@ -52,6 +26,29 @@ import pt.webdetails.cpf.repository.api.IReadAccess;
 import pt.webdetails.cpf.utils.CharsetHelper;
 import pt.webdetails.cpf.utils.MimeTypes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+
 @Path( "/cda/api/utils" )
 /**
  * @deprecated
@@ -61,24 +58,53 @@ public class RestEndpoint {
     return CharsetHelper.getEncoding();
   }
 
+  @POST
+  @Path( "/doQuery" )
+  @Consumes( { APPLICATION_XML, APPLICATION_JSON, APPLICATION_FORM_URLENCODED } )
+  public void doQueryPost( @FormParam( "path" ) String path,
+                           @FormParam( "solution" ) String solution,
+                           @FormParam( "file" ) String file,
+                           @DefaultValue( "json" ) @FormParam( "outputType" ) String outputType,
+                           @DefaultValue( "1" ) @FormParam( "outputIndexId" ) int outputIndexId,
+                           @DefaultValue( "<blank>" ) @FormParam( "dataAccessId" ) String dataAccessId,
+                           @DefaultValue( "false" ) @FormParam( "bypassCache" ) Boolean bypassCache,
+                           @DefaultValue( "false" ) @FormParam( "paginateQuery" ) Boolean paginateQuery,
+                           @DefaultValue( "0" ) @FormParam( "pageSize" ) int pageSize,
+                           @DefaultValue( "0" ) @FormParam( "pageStart" ) int pageStart,
+                           @DefaultValue( "false" ) @FormParam( "wrapItUp" ) Boolean wrapItUp,
+                           @FormParam( "sortBy" ) List<String> sortBy,
+                           @DefaultValue( "<blank>" ) @FormParam( "jsonCallback" ) String jsonCallback,
+                           @Context HttpServletResponse servletResponse,
+                           @Context HttpServletRequest servletRequest ) throws Exception {
+    this.doQuery( path, solution, file, outputType, outputIndexId, dataAccessId, bypassCache, paginateQuery,
+        pageSize, pageStart, wrapItUp, sortBy, jsonCallback, servletResponse, servletRequest );
+  }
+
   @GET
   @Path( "/doQuery" )
   @Consumes( { APPLICATION_XML, APPLICATION_JSON, APPLICATION_FORM_URLENCODED } )
-  public void doQuery( @QueryParam( "path" ) String path,
-                       @QueryParam( "solution" ) String solution,
-                       @QueryParam( "file" ) String file,
-                       @DefaultValue( "json" ) @QueryParam( "outputType" ) String outputType,
-                       @DefaultValue( "1" ) @QueryParam( "outputIndexId" ) int outputIndexId,
-                       @DefaultValue( "<blank>" ) @QueryParam( "dataAccessId" ) String dataAccessId,
-                       @DefaultValue( "false" ) @QueryParam( "bypassCache" ) Boolean bypassCache,
-                       @DefaultValue( "false" ) @QueryParam( "paginateQuery" ) Boolean paginateQuery,
-                       @DefaultValue( "0" ) @QueryParam( "pageSize" ) int pageSize,
-                       @DefaultValue( "0" ) @QueryParam( "pageStart" ) int pageStart,
-                       @DefaultValue( "false" ) @QueryParam( "wrapItUp" ) Boolean wrapItUp,
-                       @QueryParam( "sortBy" ) List<String> sortBy,
-                       @DefaultValue( "<blank>" ) @QueryParam( "jsonCallback" ) String jsonCallback,
-                       @Context HttpServletResponse servletResponse,
-                       @Context HttpServletRequest servletRequest ) throws Exception {
+  public void doQueryGet( @QueryParam( "path" ) String path,
+                          @QueryParam( "solution" ) String solution,
+                          @QueryParam( "file" ) String file,
+                          @DefaultValue( "json" ) @QueryParam( "outputType" ) String outputType,
+                          @DefaultValue( "1" ) @QueryParam( "outputIndexId" ) int outputIndexId,
+                          @DefaultValue( "<blank>" ) @QueryParam( "dataAccessId" ) String dataAccessId,
+                          @DefaultValue( "false" ) @QueryParam( "bypassCache" ) Boolean bypassCache,
+                          @DefaultValue( "false" ) @QueryParam( "paginateQuery" ) Boolean paginateQuery,
+                          @DefaultValue( "0" ) @QueryParam( "pageSize" ) int pageSize,
+                          @DefaultValue( "0" ) @QueryParam( "pageStart" ) int pageStart,
+                          @DefaultValue( "false" ) @QueryParam( "wrapItUp" ) Boolean wrapItUp,
+                          @QueryParam( "sortBy" ) List<String> sortBy,
+                          @DefaultValue( "<blank>" ) @QueryParam( "jsonCallback" ) String jsonCallback,
+                          @Context HttpServletResponse servletResponse,
+                          @Context HttpServletRequest servletRequest ) throws Exception {
+    this.doQuery( path, solution, file, outputType, outputIndexId, dataAccessId, bypassCache, paginateQuery,
+        pageSize, pageStart, wrapItUp, sortBy, jsonCallback, servletResponse, servletRequest );
+  }
+
+  private void doQuery( String path, String solution, String file, String outputType, int outputIndexId,
+                        String dataAccessId, Boolean bypassCache, Boolean paginateQuery, int pageSize, int pageStart, Boolean wrapItUp,
+                        List<String> sortBy, String jsonCallback, HttpServletResponse servletResponse, HttpServletRequest servletRequest ) throws Exception {
 
     DoQueryParameters queryParams = new DoQueryParameters( path, solution, file );
     queryParams.setBypassCache( bypassCache );
