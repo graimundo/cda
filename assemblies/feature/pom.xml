@@ -18,6 +18,7 @@
         <pdi-dataservice-plugin.version>${project.version}</pdi-dataservice-plugin.version>
         <platform.version>${project.version}</platform.version>
         <pentaho-metaverse.version>${project.version}</pentaho-metaverse.version>
+        <pentaho-osgi-bundles.version>${project.version}</pentaho-osgi-bundles.version>
     </properties>
 
     <dependencyManagement>
@@ -225,6 +226,11 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>pentaho</groupId>
+                <artifactId>pentaho-kettle-repository-locator-impl-plugin</artifactId>
+                <version>${pentaho-osgi-bundles.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -265,6 +271,11 @@
             <groupId>org.pentaho.ctools</groupId>
             <artifactId>cda-osgi-impl</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pentaho</groupId>
+            <artifactId>pentaho-kettle-repository-locator-impl-plugin</artifactId>
         </dependency>
 
         
