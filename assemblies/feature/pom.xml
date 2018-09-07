@@ -18,6 +18,7 @@
         <pdi-dataservice-plugin.version>${project.version}</pdi-dataservice-plugin.version>
         <pentaho-metaverse.version>${project.version}</pentaho-metaverse.version>
         <pentaho-osgi-bundles.version>${project.version}</pentaho-osgi-bundles.version>
+        <karaf-maven-plugin.aggregateFeatures>true</karaf-maven-plugin.aggregateFeatures>
     </properties>
 
     <dependencyManagement>
@@ -121,7 +122,6 @@
         </dependencies>
     </dependencyManagement>
 
-
     <dependencies>
         <!-- Features -->
         <dependency>
@@ -188,6 +188,5 @@
 
         <!-- Dependencies Bundles-->
     </dependencies>
-
 
 </project>
